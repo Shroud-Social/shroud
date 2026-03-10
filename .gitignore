@@ -171,3 +171,4 @@ go.work.sum
 # env file
 .env
 
+local_testing/

@@ -1,0 +1,13 @@
+{
+  "name": "@shroud/ui",
+  "version": "0.0.1",
+  "files": ["dist"],
+  "svelte": "./src/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "svelte": "./src/index.js",
+      "default": "./dist/index.js"
+    }
+  }
+}
