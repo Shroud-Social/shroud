@@ -14,5 +14,5 @@ type Tier struct {
 
 	TierExpiry time.Time `json:"tier_expiry"`
 
-	UploadSize int64 `json:"upload_size"`
+	UploadSize uint32 `json:"upload_size"`
 }
