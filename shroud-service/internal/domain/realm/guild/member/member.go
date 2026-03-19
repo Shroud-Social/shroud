@@ -26,9 +26,8 @@ const (
 )
 
 type Member struct {
-	GuildID uuid.UUID   `json:"guild_id"`
-	UserID  uuid.UUID   `json:"user_id"`
-	RoleIDs []uuid.UUID `json:"role_ids"`
+	GuildID uuid.UUID `json:"guild_id"`
+	UserID  uuid.UUID `json:"user_id"`
 
 	ApplicationStatus ApplicationStatus `json:"application_status"`
 
