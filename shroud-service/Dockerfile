@@ -13,6 +13,6 @@ RUN CGO_ENABLED=0 GOOS=linux go build -o binary ./shroud-service/cmd/${SERVICE_N
 
 FROM alpine:latest
 WORKDIR /root/
-COPY --from=builder /app/my-binary .
+COPY --from=builder /app/binary .
 
 CMD ["./binary"]
