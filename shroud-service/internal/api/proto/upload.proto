@@ -10,4 +10,5 @@ message Upload {
   string hash = 5;
   int64 uploaded_on = 6;
   bytes uploaded_by = 7;
+  string status = 8;
 }

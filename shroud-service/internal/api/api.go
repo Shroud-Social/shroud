@@ -13,7 +13,8 @@ func StartRouter() {
 
 	{
 		v1 := router.Group("/v1")
-		v1.POST("/upload-token", GetUploadToken)
+		v1.POST("/upload-request", GetUploadToken)
+		v1.POST("/upload-complete", ProcessUpload)
 	}
 
 	err := router.Run(":8080")

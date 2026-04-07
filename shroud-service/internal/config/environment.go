@@ -18,13 +18,16 @@ type DispatcherEnvironment struct {
 type EchoEnvironment struct {
 }
 
-type PersistenceEnvironment struct {
+type ScribeEnvironment struct {
+	ScyllaUri string `env:"SCYLLA_URI,required"`
 }
 
 type SatelliteEnvironment struct {
 	UserAuthSecret   string `env:"USER_AUTH_SECRET,required"`
 	UserUploadSecret string `env:"USER_UPLOAD_SECRET,required"`
+	UserUploadUri    string `env:"USER_UPLOAD_URI,required"`
 	RedisUri         string `env:"REDIS_URI,required"`
+	RedisPassword    string `env:"REDIS_PASSWORD"`
 }
 
 type SeekerEnvironment struct {

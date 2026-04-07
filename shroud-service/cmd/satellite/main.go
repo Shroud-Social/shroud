@@ -3,6 +3,7 @@ package main
 import (
 	"services/internal/api"
 	"services/internal/config"
+	"services/internal/database/redisdb"
 )
 
 func main() {
@@ -11,8 +12,10 @@ func main() {
 		panic(err)
 	}
 
+	redisdb.LoadConfig(environment.RedisUri, environment.RedisPassword)
+
 	api.LoadAuthSecret(environment.UserAuthSecret)
-	api.LoadUploadSecret(environment.UserUploadSecret)
+	api.LoadUploadConf(environment.UserUploadSecret, environment.UserUploadUri)
 
 	api.StartRouter()
 }

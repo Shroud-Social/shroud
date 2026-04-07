@@ -182,5 +182,5 @@ CREATE TABLE uploads (
     size int,
     hash varchar,
     uploaded_on timestamptz,
-    uploaded_by uuid
+    uploaded_by uuid,
 )
