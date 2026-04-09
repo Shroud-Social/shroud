@@ -7,17 +7,17 @@ import (
 	"services/internal/api/service"
 	"services/internal/comm/pubsub"
 	"services/internal/config"
-	"services/internal/database/postgresql"
+	"services/internal/database/scylla"
 	"syscall"
 )
 
 func main() {
-	environment, err := config.Load[config.CoreEnvironment]()
+	environment, err := config.Load[config.ScribeEnvironment]()
 	if err != nil {
 		panic(err)
 	}
 
-	postgresql.LoadPostgresUri(environment.PostgresUri)
+	scylla.LoadCluster(environment.ScyllaUri)
 
 	err = pubsub.Connect(environment.NatsUri)
 	if err != nil {
