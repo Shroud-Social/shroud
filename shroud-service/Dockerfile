@@ -9,7 +9,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o binary ./cmd/$SERVICE_NAME/main.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o binary ./cmd/$SERVICE_NAME
 
 FROM gcr.io/distroless/static-debian13:nonroot
 
