@@ -1,26 +1,61 @@
-name: Build Shroud Services
+name: build-docker-images
 
 on:
   push:
     branches: [ "main" ]
 
+permissions: 
+  contents: read
+  packages: write
+  id-token: write
+
 jobs:
-  build:
+  build-and-push:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        service: [ambassador, core, dispatcher, echo, persistenceworker, satellite, seekerreader, seekerwriter]
+        include:
+          - service: ambassador
+            path: ambassador
+          - service: core
+            path: core
+          - service: dispatcher
+            path: dispatcher
+          - service: echo
+            path: echo
+          - service: scribe
+            path: scribe
+          - service: seeker-reader
+            path: seeker/reader
+          - service: seeker-writer
+            path: seeker/writer
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Login to GitHub Container Registry
+
+      # GHCR
+      - name: Login to GHCR
         uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
+
+      # GCR
+      - name: Authenticate to GCR
+        uses: google-github-actions/auth@v2
+        with:
+          token_format: 'access_token'
+          workload_identity_provider: ${{ secrets.GCP_WIF_PROVIDER }}
+          service_account: ${{ secrets.GCP_SA_EMAIL }}
+
+      - name: Login to Artifact Registry
+        uses: docker/login-action@v3
+        with:
+          registry: eu-west9-docker.pkg.dev
+          username: oauth2accesstoken
+          password: ${{ steps.auth.outputs.access_token }}
+        
       - name: Build and push
         uses: docker/build-push-action@v5
         with:
@@ -29,5 +64,5 @@ jobs:
           push: true
           build-args: SERVICE_NAME=${{ matrix.service }}
           tags: |
-            ghcr.io/${{ github.repository }}/${{ matrix.service }}:latest
             ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.sha }}
+            eu-west9-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shroud-repo/${{ matrix.service }}:${{ github.sha }}
