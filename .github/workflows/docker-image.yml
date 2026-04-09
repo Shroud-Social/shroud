@@ -66,4 +66,4 @@ jobs:
           build-args: SERVICE_NAME=${{ matrix.path }}
           tags: |
             ghcr.io/${{ github.repository }}/${{ matrix.service }}:${{ github.sha }}
-            eu-west9-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shroud-repo/${{ matrix.service }}:${{ github.sha }}
+            europe-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/shroud-repo/${{ matrix.service }}:${{ github.sha }}
