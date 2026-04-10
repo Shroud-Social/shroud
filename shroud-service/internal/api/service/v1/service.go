@@ -9,18 +9,6 @@ import (
 	"github.com/nats-io/nats.go"
 )
 
-const (
-	ApiVersion1          = "v1"
-	service              = ApiVersion1 + ".service"
-	messages             = service + ".message"
-	SubjectMessageNew    = messages + ".new"
-	SubjectMessageUpdate = messages + ".update"
-	SubjectMessageDelete = messages + ".delete"
-	uploads              = service + ".uploads"
-	SubjectUploadNew     = uploads + ".new"
-	SubjectUploadDelete  = uploads + ".delete"
-)
-
 func NewUpload(m *nats.Msg) {
 	var receipt upload.Receipt
 	err := json.Unmarshal(m.Data, &receipt)
@@ -31,5 +19,17 @@ func NewUpload(m *nats.Msg) {
 }
 
 func DeleteUpload(m *nats.Msg) {
+
+}
+
+func NewMessage(m *nats.Msg) {
+
+}
+
+func UpdateMessage(m *nats.Msg) {
+
+}
+
+func DeleteMessage(m *nats.Msg) {
 
 }

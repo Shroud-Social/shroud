@@ -137,5 +137,4 @@ func initRoutesV1(router *gin.Engine) {
 			uploads.GET("/:channel_id")
 		}
 	}
-
 }

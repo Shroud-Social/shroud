@@ -4,10 +4,8 @@ import (
 	"log"
 	"os"
 	"os/signal"
-	"services/internal/api/service"
 	"services/internal/comm/pubsub"
 	"services/internal/config"
-	"services/internal/database/postgresql"
 	"syscall"
 )
 
@@ -17,26 +15,27 @@ func main() {
 		panic(err)
 	}
 
-	postgresql.LoadPostgresUri(environment.PostgresUri)
-
 	err = pubsub.Connect(environment.NatsUri)
 	if err != nil {
 		panic(err)
 	}
-	err = service.Subscribe(service.SubscriptionsCore)
-	if err != nil {
-		panic(err)
-	}
+
 	log.Println("Shroud Core service started")
 
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
 	<-sigchan
 	log.Println("Shroud Core service shutting down...")
+
+	log.Println("NATS connection draining")
 	err = pubsub.Connection.Drain()
 	if err != nil {
 		panic(err)
 	}
+	log.Println("NATS connection drained")
+
 	pubsub.Connection.Close()
+	log.Println("NATS connection closed")
+
 	log.Println("Shroud Core service shut down")
 }

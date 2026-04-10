@@ -30,7 +30,7 @@ func main() {
 	v1.LoadAuthSecret(environment.UserAuthSecret)
 	v1.LoadUploadConf(environment.UserUploadSecret, environment.UserUploadUri)
 	srv := userapi.SetupRouters()
-	log.Println("Shroud Core service started")
+	log.Println("Shroud Satellite service started")
 
 	sigchan := make(chan os.Signal, 1)
 	signal.Notify(sigchan, syscall.SIGINT, syscall.SIGTERM)
@@ -46,14 +46,13 @@ func main() {
 	}
 	log.Println("HTTP server stopped")
 
-	log.Println("Draining NATS connection...")
+	log.Println("NATS connection draining...")
 	err = pubsub.Connection.Drain()
 	if err != nil {
 		log.Fatal(err)
 	}
-	log.Println("NATS connection stopped")
+	log.Println("NATS connection drained")
 
-	log.Println("Closing NATS connection...")
 	pubsub.Connection.Close()
 	log.Println("NATS connection closed")
 

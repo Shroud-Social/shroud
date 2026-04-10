@@ -1,21 +1,56 @@
 package service
 
 import (
-	subjectsV1 "services/internal/api/service/v1"
+	"fmt"
+	servicev1 "services/internal/api/service/v1"
 	"services/internal/comm/pubsub"
 
 	"github.com/nats-io/nats.go"
 )
 
-var (
-	SubscriptionsCore = map[string]nats.MsgHandler{
-		subjectsV1.SubjectUploadNew:    subjectsV1.NewUpload,
-		subjectsV1.SubjectUploadDelete: subjectsV1.DeleteUpload,
-	}
+const (
+	ApiVersion1 = "v1"
+
+	service              = ApiVersion1 + ".service"
+	messages             = service + ".message"
+	SubjectMessageNew    = messages + ".new"
+	SubjectMessageUpdate = messages + ".update"
+	SubjectMessageDelete = messages + ".delete"
+
+	uploads             = service + ".uploads"
+	SubjectUploadNew    = uploads + ".new"
+	SubjectUploadDelete = uploads + ".delete"
 )
 
-func Subscribe(map[string]nats.MsgHandler) error {
-	for s, h := range SubscriptionsCore {
+const (
+	event = ApiVersion1 + ".event"
+)
+
+func SubjectMessageCreated(guildId, channelId string) string {
+	return fmt.Sprintf("%s.guild.%s.channel.%s.message.created", event, guildId, channelId)
+}
+
+func SubjectMessageUpdated(guildId, channelId string) string {
+	return fmt.Sprintf("%s.guild.%s.channel.%s.message.updated", event, guildId, channelId)
+}
+
+func SubjectMessageDeleted(guildId, channelId string) string {
+	return fmt.Sprintf("%s.guild.%s.channel.%s.message.deleted", event, guildId, channelId)
+}
+
+var (
+	SubscriptionsDispatcher = map[string]nats.MsgHandler{
+		SubjectUploadNew:     servicev1.NewUpload,
+		SubjectUploadDelete:  servicev1.DeleteUpload,
+		SubjectMessageNew:    servicev1.NewMessage,
+		SubjectMessageUpdate: servicev1.UpdateMessage,
+		SubjectMessageDelete: servicev1.DeleteMessage,
+	}
+	SubscriptionsScribe = map[string]nats.MsgHandler{}
+)
+
+func Subscribe(group map[string]nats.MsgHandler) error {
+	for s, h := range group {
 		_, err := pubsub.Connection.Subscribe(s, h)
 		if err != nil {
 			return err
