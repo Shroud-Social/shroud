@@ -25,6 +25,8 @@ jobs:
             path: echo
           - service: scribe
             path: scribe
+          - service: satellite
+            path: satellite
           - service: seeker-reader
             path: seeker/reader
           - service: seeker-writer
