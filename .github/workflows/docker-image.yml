@@ -3,6 +3,7 @@ name: build-docker-images
 on:
   release:
     types: [published]
+  workflow_dispatch: 
 
 permissions: 
   contents: read
@@ -25,6 +26,8 @@ jobs:
             path: echo
           - service: scribe
             path: scribe
+          - service: satellite
+            path: satellite
           - service: seeker-reader
             path: seeker/reader
           - service: seeker-writer
