@@ -3,9 +3,8 @@ package v1
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
-	internalApi "services/internal/api/service/v1"
-	"services/internal/comm/pubsub"
 	"services/internal/domain/realm/upload"
 	"services/internal/storage"
 	"strings"
@@ -112,7 +111,7 @@ func ProcessUpload(c *gin.Context) {
 			c.JSON(http.StatusInternalServerError, gin.H{"Couldn't generate JSON Marshalling Data": err.Error()})
 			return
 		}
-		err = pubsub.Connection.Publish(internalApi.SubjectUploadNew, jsonData)
+		log.Println(string(jsonData))
 		if err != nil {
 			c.JSON(http.StatusInternalServerError, gin.H{"Couldn't publish JSON Message": err.Error()})
 			return
