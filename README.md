@@ -8,4 +8,9 @@ A high performance, federated and stateless chat platform designed for privacy a
 
 ---
 
-Readme coming soon
+## Roadmap
+
+- [ ] Minimum Viable Product - guilds, channels, messages, users, relationships, roles, etc
+- [ ] Federation
+- [ ] Interactions
+- [x] CDN
