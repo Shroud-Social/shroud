@@ -1,6 +1,8 @@
 import * as BunnySDK from "https://esm.sh/@bunny.net/edgescript-sdk@0.11.2";
 import { jwtVerify, SignJWT } from "https://esm.sh/jose";
 
+// TODO: impl file chunking to allow for larger file uploads without script timeouts
+
 /**
 * @file Bunny EdgeScript for JWT-secured file uploads
  * * Required environment variables:
