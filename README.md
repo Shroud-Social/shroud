@@ -1,4 +1,4 @@
-![Placeholder Logo](https://cdn.shroud.social/assets/placeholder-logo.png)
+![Placeholder Logo](https://cdn.shroud.org.uk/brand/logo-github-social.png)
 
 A high performance, federated and stateless chat platform designed for privacy and community
 
