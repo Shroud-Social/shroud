@@ -1,4 +1,4 @@
-![Placeholder Logo](https://cdn.shroud.org.uk/brand/logo-github-social.png)
+![shroud.social Logo](https://cdn.shroud.org.uk/brand/logo-github-social.png)
 
 **An open-source, federated and private messaging platform**
 
