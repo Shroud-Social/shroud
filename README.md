@@ -1,6 +1,6 @@
 ![Placeholder Logo](https://cdn.shroud.org.uk/brand/logo-github-social.png)
 
-A high performance, federated and stateless chat platform designed for privacy and community
+**An open-source, federated and private messaging platform**
 
 ![GitHub Release](https://img.shields.io/github/v/release/shroud-social/shroud?include_prereleases)
 ![GitHub Actions Workflow Status](https://img.shields.io/github/actions/workflow/status/shroud-social/shroud/docker-image.yml)
